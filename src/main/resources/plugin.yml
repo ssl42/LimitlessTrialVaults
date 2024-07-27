@@ -1,0 +1,6 @@
+name: LimitlessTrialVaults
+version: ${version}
+author: 'Pgini'
+description: 'Removes the one time use limit on trial vaults'
+main: net.divinitystudios.limitlesstrialvaults.Main
+api-version: '1.21'

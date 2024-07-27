@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'io.github.patrick.remapper' version '1.4.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'net.divinitystudios'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot:1.21-R0.1-SNAPSHOT:remapped-mojang'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['--add-exports', 'java.base/jdk.internal.reflect=ALL-UNNAMED']
+}
+
+tasks.named('shadowJar') {
+    dependsOn(tasks.jar)
+    manifest {
+        attributes(
+                'Main-Class': 'net.divinitystudios.limitlesstrialvaults.Main'
+        )
+    }
+}
+
+tasks.named('build') {
+    dependsOn(tasks.shadowJar)
+}
